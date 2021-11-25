@@ -13,7 +13,7 @@ with open(INPUT_FILENAME) as file:
 
 def run_container(numbers, start, client):
     container = client.containers.run(
-        image = IMAGE_NAME,
+        image=IMAGE_NAME,
         command=f'sh ./mean.sh {numbers}',
         detach=True
     )
@@ -35,12 +35,13 @@ def multi_thread(n_threads):
     with ThreadPoolExecutor(n_threads) as pool:
         start = time.time()
         for numbers in DATA:
-             pool.submit(run_container, numbers, start, client)
+            pool.submit(run_container, numbers, start, client)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--threads', '-t', help='number of threads', type=int, default=1)
+    parser.add_argument('--threads', '-t',
+                        help='number of threads', type=int, default=1)
     args = parser.parse_args()
     if args.threads == 1:
         single_thread()
